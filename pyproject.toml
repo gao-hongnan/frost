@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "frost"
+version = "0.1.0"
+description = "Enterprise-grade Python utilities."
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "GAO Hongnan", email = "hongnangao@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+dependencies = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "mypy>=1.16.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.9.1",
+    "pyright>=1.1.402",
+    "pytest-mock>=3.14.1",
+    "pyyaml>=6.0.2",
+    "rich",
+    "ruff>=0.11.13",
+    "ty>=0.0.1a10",
+    "types-pyyaml>=6.0.12.20250516",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "ty>=0.0.0a6",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["frost"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+asyncio_mode = "auto"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple/"
+publish-url = "https://upload.pypi.org/legacy/"
+default = true

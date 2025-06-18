@@ -1,0 +1,26 @@
+{
+  "include": [
+    "frost",
+    "tests"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.mypy_cache",
+    "**/.ruff_cache",
+    "**/build",
+    "**/dist"
+  ],
+  "typeCheckingMode": "strict",
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "strictParameterNoneValue": true,
+  "pythonVersion": "3.12",
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "reportUnknownMemberType": false,
+  "reportUnknownArgumentType": false,
+  "reportUnknownVariableType": false,
+  "reportPrivateUsage": false
+}
