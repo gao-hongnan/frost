@@ -59,7 +59,7 @@ select = [
     "PLW0711", # binary op exception
     "PLW1509", # preexec_fn not safe with threads
     "PLW3301", # nested min max
-    "PT006", # pytest rules
+    "PT006",   # pytest rules
     "PT022",
     "PT023",
     "PT024",
@@ -79,6 +79,7 @@ ignore = [
     "B027",
     "UP040",
     "UP046",
+    "UP047",
 ]
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
