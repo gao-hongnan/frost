@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "frost"
-version = "0.0.1"
+name = "frostbound"
+version = "0.1.0"
 description = "Enterprise-grade Python utilities."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -65,3 +65,13 @@ packages = ["frost"]
 testpaths = ["tests"]
 python_files = "test_*.py"
 asyncio_mode = "auto"
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+major_on_zero = false
+allow_zero_version = true
+commit_parser = "conventional"
+
+[tool.semantic_release.branches.main]
+match = "main"
+prerelease = false
