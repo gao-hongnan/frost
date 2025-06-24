@@ -64,7 +64,9 @@ def _setup_hooks(
 
 
 @contextmanager
-def hook_instructor(client: instructor.Instructor | instructor.AsyncInstructor) -> Iterator[CompletionTrace]:
+def hook_instructor(
+    client: instructor.Instructor | instructor.AsyncInstructor, enable: bool = True
+) -> Iterator[CompletionTrace]:
     """
     Capture execution details from a synchronous instructor client.
 
@@ -76,6 +78,9 @@ def hook_instructor(client: instructor.Instructor | instructor.AsyncInstructor) 
     ----------
     client : instructor.Instructor | instructor.AsyncInstructor
         The instructor client instance to capture events from.
+    enable : bool, optional
+        Whether to enable hook capture. When False, returns an empty
+        CompletionTrace without setting up any hooks. Default is True.
 
     Yields
     ------
@@ -103,7 +108,16 @@ def hook_instructor(client: instructor.Instructor | instructor.AsyncInstructor) 
     ...     print(captured.messages)  # Access captured messages
     ...     print(captured.kwargs)  # Access all completion kwargs
     ...     print(captured.raw_response)  # Access raw API response
+    >>>
+    >>> # Conditionally enable hooks based on debug mode
+    >>> debug_mode = os.getenv("DEBUG", "").lower() == "true"
+    >>> with hook_instructor(client, enable=debug_mode) as captured:
+    ...     result = client.create(...)
     """
+    if not enable:
+        yield CompletionTrace()
+        return
+
     captured, hooks = _setup_hooks(client)
 
     try:
@@ -114,7 +128,7 @@ def hook_instructor(client: instructor.Instructor | instructor.AsyncInstructor) 
 
 
 @asynccontextmanager
-async def ahook_instructor(client: instructor.AsyncInstructor) -> AsyncIterator[CompletionTrace]:
+async def ahook_instructor(client: instructor.AsyncInstructor, enable: bool = True) -> AsyncIterator[CompletionTrace]:
     """
     Capture execution details from an asynchronous instructor client.
 
@@ -130,6 +144,9 @@ async def ahook_instructor(client: instructor.AsyncInstructor) -> AsyncIterator[
     ----------
     client : instructor.AsyncInstructor
         The async instructor client instance to capture events from.
+    enable : bool, optional
+        Whether to enable hook capture. When False, returns an empty
+        CompletionTrace without setting up any hooks. Default is True.
 
     Yields
     ------
@@ -161,6 +178,13 @@ async def ahook_instructor(client: instructor.AsyncInstructor) -> AsyncIterator[
     ...         print(captured.raw_response)
     >>>
     >>> asyncio.run(main())
+    >>>
+    >>> # Conditionally enable hooks based on debug mode
+    >>> async def main_with_toggle():
+    ...     debug_mode = os.getenv("DEBUG", "").lower() == "true"
+    ...     client = instructor.from_openai(AsyncOpenAI())
+    ...     async with ahook_instructor(client, enable=debug_mode) as captured:
+    ...         result = await client.create(...)
 
     Notes
     -----
@@ -168,6 +192,10 @@ async def ahook_instructor(client: instructor.AsyncInstructor) -> AsyncIterator[
     handle the asynchronous event loop and ensure callbacks are registered
     and unregistered correctly in an async context.
     """
+    if not enable:
+        yield CompletionTrace()
+        return
+
     captured, hooks = _setup_hooks(client)
 
     try:

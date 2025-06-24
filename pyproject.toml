@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "frostbound"
-version = "0.6.0"
+version = "0.7.0"
 description = "Enterprise-grade Python utilities."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -61,11 +61,6 @@ dev = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["frostbound"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
-asyncio_mode = "auto"
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
